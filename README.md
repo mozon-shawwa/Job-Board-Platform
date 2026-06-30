@@ -61,7 +61,6 @@ codealpha-jobboard/
 ├── uploads/
 │
 ├── .env
-├── .env.example
 ├── .gitignore
 ├── Dockerfile
 ├── docker-compose.yml
