@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String
+  name          String
+  role          Role      @default(CANDIDATE)
+  company       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  jobs          Job[]     @relation("EmployerJobs")
+  applications  Application[]
+  resume        Resume?
+}
+
+model Job {
+  id            String    @id @default(uuid())
+  title         String
+  description   String
+  location      String
+  salaryMin     Int?
+  salaryMax     Int?
+  type          JobType   @default(FULL_TIME)
+  category      String
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  employerId    String
+  employer      User      @relation("EmployerJobs", fields: [employerId], references: [id])
+
+  applications  Application[]
+}
+
+model Resume {
+  id            String    @id @default(uuid())
+  fileName      String
+  fileUrl       String
+  uploadedAt    DateTime  @default(now())
+
+  candidateId   String    @unique
+  candidate     User      @relation(fields: [candidateId], references: [id])
+}
+
+model Application {
+  id            String    @id @default(uuid())
+  status        ApplicationStatus @default(PENDING)
+  coverLetter   String?
+  appliedAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  candidateId   String
+  candidate     User      @relation(fields: [candidateId], references: [id])
+
+  jobId         String
+  job           Job       @relation(fields: [jobId], references: [id])
+
+  @@unique([candidateId, jobId])
+}
+
+enum Role {
+  EMPLOYER
+  CANDIDATE
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  REMOTE
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  SHORTLISTED
+  REJECTED
+  HIRED
+}
