@@ -1,4 +1,4 @@
-# CodeAlpha Job Board Platform - Backend
+# Job Board Platform - Backend
  
 A production-ready REST API for a Job Board Platform built with **Node.js**, **Express.js**, **PostgreSQL**, and **Prisma ORM**.
  
@@ -328,7 +328,3 @@ Before deploying:
 - Validate all incoming requests.
 - Store uploaded files securely (consider cloud storage instead of local disk).
 ---
- 
-# 👨‍💻 Author
- 
-Developed as part of the **CodeAlpha Backend Development Internship**.
