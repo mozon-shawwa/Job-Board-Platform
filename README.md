@@ -202,7 +202,7 @@ npm run dev
 Example:
  
 ```env
-DATABASE_URL="postgresql://postgres:postgres123@localhost:5432/codealpha_jobboard?schema=public"
+DATABASE_URL="postgresql://postgres:postgres123@localhost:5432/jobboard?schema=public"
  
 JWT_SECRET="your_super_secret_jwt_key_change_in_production"
  
